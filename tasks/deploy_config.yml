@@ -1,0 +1,15 @@
+- name: Ensure lsyncd_config_base exists
+  ansible.builtin.file:
+    name: "{{ lsyncd_config_base }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Deploy config
+  ansible.builtin.template:
+    src: lsynd.conf.lua.j2
+    dest: "{{ lsyncd_config_file }}"
+    owner: root
+    group: root
+    mode: '0644'

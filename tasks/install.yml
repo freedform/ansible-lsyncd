@@ -1,0 +1,32 @@
+- name: Install Lsyncd
+  ansible.builtin.apt:
+    name: "lsyncd={{ lsyncd_version }}"
+    state: present
+    update_cache: true
+    allow_downgrade: true
+
+- name: Enable Lsyncd daemon
+  ansible.builtin.service:
+    name: lsyncd
+    enabled: true
+
+- name: Create Lsyncd log and status files
+  ansible.builtin.file:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  loop:
+    - name: "{{ lsyncd_config_base }}"
+      state: directory
+      mode: '0755'
+    - name: "{{ lsyncd_log_base }}"
+      state: directory
+      mode: '0755'
+    - name: "{{ lsyncd_log_file }}"
+      state: touch
+      mode: '0644'
+    - name: "{{ lsyncd_status_file }}"
+      state: touch
+      mode: '0644'

@@ -1,0 +1,34 @@
+settings {
+    logfile        = "{{ lsyncd_log_file }}",
+    statusFile     = "{{ lsyncd_status_file }}",
+    statusInterval = {{ lsyncd_status_interval }},
+
+    nodaemon       = {{ lsyncd_nodaemon }},
+    insist         = {{ lsyncd_insist }},
+
+    maxProcesses   = {{ lsyncd_max_rocesses }},
+    inotifyMode    = "{{ lsyncd_inotify_mode }}",
+}
+
+{% for local_dir, remote_data in lsyncd_config.items() %}
+sync {
+    default.rsync,
+    source = "{{ local_dir }}",
+    target = "{{ remote_data.rsync_user_name }}@{{ remote_data.rsync_host_ip }}:{{ remote_data.destination_dir }}",
+    delete  = {{ remote_data.delete }},
+    delay = {{ remote_data.delay }},
+
+    rsync = {
+        archive = true,
+        verbose = true,
+        _extra = {
+            "-e",
+            "ssh -p {{ remote_data.rsync_host_port }} " ..
+            "-i {{ remote_data.rsync_user_key}} " ..
+            "-o IdentitiesOnly=yes " ..
+            "-o StrictHostKeyChecking=yes",
+            "--rsync-path=sudo rsync"
+        }
+    }
+}
+{% endfor %}

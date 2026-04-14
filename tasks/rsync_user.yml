@@ -1,0 +1,14 @@
+- name: Fetch SSH host key
+  register: lsyncd_ssh_keyscan_result
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail &&
+      ssh-keyscan {{ lsyncd_rsync_peer_ip }} 2>/dev/null | grep ssh-ed25519
+    executable: /bin/bash
+  failed_when: lsyncd_ssh_keyscan_result.rc != 0
+  changed_when: false
+
+- name: Add remote peer ip to known hosts
+  ansible.builtin.known_hosts:
+    name: "{{ lsyncd_rsync_peer_ip }}"
+    key: "{{ lsyncd_ssh_keyscan_result.stdout }}"

@@ -1,0 +1,4 @@
+- name: Control Lsyncd daemon status
+  ansible.builtin.service:
+    name: lsyncd
+    state: "{{ lsyncd_state_action }}"

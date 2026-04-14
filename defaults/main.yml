@@ -1,0 +1,12 @@
+lsyncd_version: 2.2.3-1
+lsyncd_config_base: /etc/lsyncd
+lsyncd_config_file: "{{ lsyncd_config_base }}/lsyncd.conf.lua"
+lsyncd_log_base: /var/log/lsyncd
+lsyncd_log_file: "{{ lsyncd_log_base }}/lsyncd.log"
+lsyncd_status_file: "{{ lsyncd_log_base }}/lsyncd.status"
+
+lsyncd_status_interval: 20
+lsyncd_nodaemon: "false"
+lsyncd_insist: "true"
+lsyncd_max_rocesses: 1
+lsyncd_inotify_mode: CloseWrite
