@@ -3,3 +3,8 @@ lsyncd_supported_actions:
   - rsync_user
   - deploy_config
   - state_control
+lsyncd_supported_states:
+  - started
+  - stopped
+  - restarted
+  - reloaded

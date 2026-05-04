@@ -1,3 +1,8 @@
+- name: Validate variables for state_control.yml task
+  ansible.builtin.assert:
+    that:
+      - lsyncd_state_action in lsyncd_supported_states
+
 - name: Control Lsyncd daemon status
   ansible.builtin.service:
     name: lsyncd

@@ -8,58 +8,8 @@
       - lsyncd_action_list | length > 0
       - lsyncd_action_list | difference(lsyncd_supported_actions) | length == 0
 
-
-- name: Install lsyncd
-  when: "'install' in lsyncd_action_list"
-  block:
-    - name: Validate variables for install.yml task
-      ansible.builtin.assert:
-        that:
-          - lsyncd_version is defined
-
-    - name: Install lsyncd
-      ansible.builtin.include_tasks: install.yml
-
-- name: User management
-  when: "'rsync_user' in lsyncd_action_list"
-  block:
-    - name: Validate variables for rsync_user.yml task
-      ansible.builtin.assert:
-        that:
-          # - lsyncd_rsync_user_name is defined
-          # - lsyncd_rsync_user_public_key is defined
-          # - lsyncd_rsync_user_private_key is defined
-          - lsyncd_rsync_peer_ip is defined
-
-    - name: User management
-      ansible.builtin.include_tasks: rsync_user.yml
-
-- name: Deploy lsyncd config
-  when: "'deploy_config' in lsyncd_action_list"
-  block:
-    - name: Validate variables for deploy_config.yml task
-      ansible.builtin.assert:
-        that:
-          - lsyncd_config_base is defined
-          - lsyncd_config_file is defined
-          - lsyncd_log_file is defined
-          - lsyncd_status_file is defined
-          - lsyncd_status_interval is defined
-          - lsyncd_nodaemon is defined
-          - lsyncd_insist is defined
-          - lsyncd_max_rocesses is defined
-          - lsyncd_inotify_mode is defined
-          - lsyncd_config is defined
-
-    - name: Install lsyncd
-      ansible.builtin.include_tasks: deploy_config.yml
-
-- name: Control lsyncd
-  when: "'state_control' in lsyncd_action_list"
-  block:
-    - name: Validate variables for state_control.yml task
-      ansible.builtin.assert:
-        that:
-          - lsyncd_state_action in ['started', 'stopped', 'restarted', 'reloaded']
-    - name: Control lsyncd
-      ansible.builtin.include_tasks: state_control.yml
+- name: Deploy Lsyncd
+  ansible.builtin.include_tasks: "{{ task_name }}.yml"
+  loop: "{{ lsyncd_action_list }}"
+  loop_control:
+    loop_var: task_name

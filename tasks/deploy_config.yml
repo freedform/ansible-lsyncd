@@ -1,3 +1,17 @@
+- name: Validate variables for deploy_config.yml task
+  ansible.builtin.assert:
+    that:
+      - lsyncd_config_base is defined
+      - lsyncd_config_file is defined
+      - lsyncd_log_file is defined
+      - lsyncd_status_file is defined
+      - lsyncd_status_interval is defined
+      - lsyncd_nodaemon is defined
+      - lsyncd_insist is defined
+      - lsyncd_max_rocesses is defined
+      - lsyncd_inotify_mode is defined
+      - lsyncd_config is defined
+
 - name: Ensure lsyncd_config_base exists
   ansible.builtin.file:
     name: "{{ lsyncd_config_base }}"

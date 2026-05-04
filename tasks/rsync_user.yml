@@ -1,3 +1,8 @@
+- name: Validate variables for rsync_user.yml task
+  ansible.builtin.assert:
+    that:
+      - lsyncd_rsync_peer_ip is defined
+
 - name: Fetch SSH host key
   register: lsyncd_ssh_keyscan_result
   ansible.builtin.shell:

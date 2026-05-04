@@ -1,3 +1,8 @@
+- name: Validate variables for install.yml task
+  ansible.builtin.assert:
+    that:
+      - lsyncd_version is defined
+
 - name: Install Lsyncd
   ansible.builtin.apt:
     name: "lsyncd={{ lsyncd_version }}"
