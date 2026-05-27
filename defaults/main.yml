@@ -1,12 +1,94 @@
+# @var lsyncd_actions:description: >
+# List of actions the role does, accepts one or more actions.
+# Use comma without spaces as a delimiter for multiple actions.
+# @var lsyncd_actions:required: `true`
+# @var lsyncd_actions:type: String
+# @var lsyncd_actions:example: >
+#   lsyncd_actions: install
+#   lsyncd_actions: install,deploy_config
+# @end
+
+# @var lsyncd_version:description: Lsyncd package version to install
+# @var lsyncd_version:type: String
+# @end
 lsyncd_version: 2.2.3-1
+
+# @var lsyncd_config_base:description: Base directory for lsyncd configuration files
+# @var lsyncd_config_base:type: String
+# @end
 lsyncd_config_base: /etc/lsyncd
+
+# @var lsyncd_config_file:description: Path to the main lsyncd configuration file
+# @var lsyncd_config_file:type: String
+# @end
 lsyncd_config_file: "{{ lsyncd_config_base }}/lsyncd.conf.lua"
+
+# @var lsyncd_log_base:description: Base directory for lsyncd log files
+# @var lsyncd_log_base:type: String
+# @end
 lsyncd_log_base: /var/log/lsyncd
+
+# @var lsyncd_log_file:description: Path to the lsyncd log file
+# @var lsyncd_log_file:type: String
+# @end
 lsyncd_log_file: "{{ lsyncd_log_base }}/lsyncd.log"
+
+# @var lsyncd_status_file:description: Path to the lsyncd status file
+# @var lsyncd_status_file:type: String
+# @end
 lsyncd_status_file: "{{ lsyncd_log_base }}/lsyncd.status"
 
+# @var lsyncd_status_interval:description: Interval in seconds for writing the status file
+# @var lsyncd_status_interval:type: Integer
+# @end
 lsyncd_status_interval: 20
+
+# @var lsyncd_nodaemon:description: Run lsyncd in foreground instead of as a daemon when true
+# @var lsyncd_nodaemon:type: String
+# @end
 lsyncd_nodaemon: "false"
+
+# @var lsyncd_insist:description: Keep retrying on startup errors when true
+# @var lsyncd_insist:type: String
+# @end
 lsyncd_insist: "true"
-lsyncd_max_rocesses: 1
+
+# @var lsyncd_max_processes:description: Maximum number of rsync processes running simultaneously
+# @var lsyncd_max_processes:type: Integer
+# @end
+lsyncd_max_processes: 1
+
+# @var lsyncd_inotify_mode:description: inotify event type that triggers a sync (CloseWrite, Modify, or CloseWrite or Modify)
+# @var lsyncd_inotify_mode:type: String
+# @end
 lsyncd_inotify_mode: CloseWrite
+
+# @var lsyncd_config:description: >
+# Sync pairs mapping local source directories to remote rsync targets.
+# @var lsyncd_config:required: `true`, only when action is deploy_config
+# @var lsyncd_config:type: Dict
+# @var lsyncd_config:example: $>
+# {
+#   "/var/www/html": {
+#     "rsync_user_name": "rsync_user",
+#     "rsync_host_ip": "192.168.1.10",
+#     "rsync_host_port": "22",
+#     "rsync_user_key": "/home/rsync_user/.ssh/id_ed25519",
+#     "destination_dir": "/var/www/html",
+#     "delete": "true",
+#     "delay": 5
+#   }
+# }
+# @end
+
+# @var lsyncd_rsync_peer_ip:description: IP address of the remote rsync peer to add to known_hosts
+# @var lsyncd_rsync_peer_ip:required: `true`, only when action is rsync_user
+# @var lsyncd_rsync_peer_ip:type: String
+# @end
+
+# @var lsyncd_state_action:description: Target state for the lsyncd daemon
+# @var lsyncd_state_action:required: `true`, only when action is state_control
+# @var lsyncd_state_action:type: String
+# @var lsyncd_state_action:example: >
+#   lsyncd_state_action: restarted
+# @end

@@ -8,7 +8,7 @@
       - lsyncd_status_interval is defined
       - lsyncd_nodaemon is defined
       - lsyncd_insist is defined
-      - lsyncd_max_rocesses is defined
+      - lsyncd_max_processes is defined
       - lsyncd_inotify_mode is defined
       - lsyncd_config is defined
 
@@ -22,7 +22,7 @@
 
 - name: Deploy config
   ansible.builtin.template:
-    src: lsynd.conf.lua.j2
+    src: lsyncd.conf.lua.j2
     dest: "{{ lsyncd_config_file }}"
     owner: root
     group: root

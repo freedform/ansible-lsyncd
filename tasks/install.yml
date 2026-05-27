@@ -15,23 +15,26 @@
     name: lsyncd
     enabled: true
 
-- name: Create Lsyncd log and status files
+- name: Create Lsyncd config and log directories
   ansible.builtin.file:
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
+    name: "{{ item }}"
+    state: directory
     owner: root
     group: root
-    mode: "{{ item.mode }}"
+    mode: '0755'
   loop:
-    - name: "{{ lsyncd_config_base }}"
-      state: directory
-      mode: '0755'
-    - name: "{{ lsyncd_log_base }}"
-      state: directory
-      mode: '0755'
-    - name: "{{ lsyncd_log_file }}"
-      state: touch
-      mode: '0644'
-    - name: "{{ lsyncd_status_file }}"
-      state: touch
-      mode: '0644'
+    - "{{ lsyncd_config_base }}"
+    - "{{ lsyncd_log_base }}"
+
+- name: Create Lsyncd log and status files
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: touch
+    owner: root
+    group: root
+    mode: '0644'
+    modification_time: preserve
+    access_time: preserve
+  loop:
+    - "{{ lsyncd_log_file }}"
+    - "{{ lsyncd_status_file }}"
