@@ -17,7 +17,7 @@
 
 - name: Create Lsyncd config and log directories
   ansible.builtin.file:
-    name: "{{ item }}"
+    name: "{{ lsyncd_dir }}"
     state: directory
     owner: root
     group: root
@@ -25,10 +25,12 @@
   loop:
     - "{{ lsyncd_config_base }}"
     - "{{ lsyncd_log_base }}"
+  loop_control:
+    loop_var: lsyncd_dir
 
 - name: Create Lsyncd log and status files
   ansible.builtin.file:
-    name: "{{ item }}"
+    name: "{{ lsyncd_file }}"
     state: touch
     owner: root
     group: root
@@ -38,3 +40,5 @@
   loop:
     - "{{ lsyncd_log_file }}"
     - "{{ lsyncd_status_file }}"
+  loop_control:
+    loop_var: lsyncd_file
