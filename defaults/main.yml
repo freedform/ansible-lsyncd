@@ -65,6 +65,9 @@ lsyncd_inotify_mode: CloseWrite
 
 # @var lsyncd_config:description: >
 # Sync pairs mapping local source directories to remote rsync targets.
+# Each entry accepts an optional `host_verification` key ("yes" by default),
+# passed to ssh as StrictHostKeyChecking. Only set it to "no" if you
+# understand this disables verification of the remote host's identity.
 # @var lsyncd_config:required: `true`, only when action is deploy_config
 # @var lsyncd_config:type: Dict
 # @var lsyncd_config:example: $>
@@ -76,14 +79,10 @@ lsyncd_inotify_mode: CloseWrite
 #     "rsync_user_key": "/home/rsync_user/.ssh/id_ed25519",
 #     "destination_dir": "/var/www/html",
 #     "delete": "true",
-#     "delay": 5
+#     "delay": 5,
+#     "host_verification": "yes"
 #   }
 # }
-# @end
-
-# @var lsyncd_rsync_peer_ip:description: IP address of the remote rsync peer to add to known_hosts
-# @var lsyncd_rsync_peer_ip:required: `true`, only when action is rsync_user
-# @var lsyncd_rsync_peer_ip:type: String
 # @end
 
 # @var lsyncd_state_action:description: Target state for the lsyncd daemon

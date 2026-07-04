@@ -26,7 +26,7 @@ sync {
             "ssh -p {{ remote_data.rsync_host_port }} " ..
             "-i {{ remote_data.rsync_user_key }} " ..
             "-o IdentitiesOnly=yes " ..
-            "-o StrictHostKeyChecking=yes",
+            "-o StrictHostKeyChecking={{ remote_data.host_verification | default('yes') }}",
             "--rsync-path=sudo rsync"
         }
     }

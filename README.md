@@ -16,7 +16,6 @@ lsyncd role
   - [lsyncd_log_file](#lsyncd_log_file)
   - [lsyncd_max_processes](#lsyncd_max_processes)
   - [lsyncd_nodaemon](#lsyncd_nodaemon)
-  - [lsyncd_rsync_peer_ip](#lsyncd_rsync_peer_ip)
   - [lsyncd_state_action](#lsyncd_state_action)
   - [lsyncd_status_file](#lsyncd_status_file)
   - [lsyncd_status_interval](#lsyncd_status_interval)
@@ -51,6 +50,9 @@ Use comma without spaces as a delimiter for multiple actions.
 ### lsyncd_config
 
 Sync pairs mapping local source directories to remote rsync targets.
+Each entry accepts an optional `host_verification` key ("yes" by default),
+passed to ssh as StrictHostKeyChecking. Only set it to "no" if you
+understand this disables verification of the remote host's identity.
 
 **_Required:_** `true`, only when action is deploy_config<br />
 **_Type:_** Dict<br />
@@ -67,6 +69,7 @@ lsyncd_config:
     destination_dir: /var/www/html
     delete: 'true'
     delay: 5
+    host_verification: yes
 ```
 
 ### lsyncd_config_base
@@ -164,13 +167,6 @@ Run lsyncd in foreground instead of as a daemon when true
 ```YAML
 lsyncd_nodaemon: 'false'
 ```
-
-### lsyncd_rsync_peer_ip
-
-IP address of the remote rsync peer to add to known_hosts
-
-**_Required:_** `true`, only when action is rsync_user<br />
-**_Type:_** String<br />
 
 ### lsyncd_state_action
 
