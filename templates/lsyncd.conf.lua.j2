@@ -10,7 +10,8 @@ settings {
     inotifyMode    = "{{ lsyncd_inotify_mode }}",
 }
 
-{% for local_dir, remote_data in lsyncd_config.items() %}
+{% for local_dir, remote_targets in lsyncd_config.items() %}
+{% for remote_data in remote_targets %}
 sync {
     default.rsync,
     source = "{{ local_dir }}",
@@ -31,4 +32,5 @@ sync {
         }
     }
 }
+{% endfor %}
 {% endfor %}

@@ -12,6 +12,12 @@
       - lsyncd_inotify_mode is defined
       - lsyncd_config is defined
 
+- name: Validate lsyncd_config structure
+  ansible.builtin.assert:
+    that:
+      - lsyncd_config.values() | map('type_debug') | select('ne', 'list') | list | length == 0
+    fail_msg: "Each lsyncd_config entry must be a list of remote target dicts"
+
 - name: Ensure lsyncd_config_base exists
   ansible.builtin.file:
     name: "{{ lsyncd_config_base }}"

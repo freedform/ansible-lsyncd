@@ -8,10 +8,17 @@
         lsyncd_actions: install,deploy_config
         lsyncd_config:
           /var/www/html:
-            rsync_user_name: rsync_user
-            rsync_host_ip: 192.168.1.10
-            rsync_host_port: "22"
-            rsync_user_key: /home/rsync_user/.ssh/id_ed25519
-            destination_dir: /var/www/html
-            delete: "true"
-            delay: 5
+            - rsync_user_name: rsync_user
+              rsync_host_ip: 192.168.1.10
+              rsync_host_port: "22"
+              rsync_user_key: /home/rsync_user/.ssh/id_ed25519
+              destination_dir: /var/www/html
+              delete: "true"
+              delay: 5
+            - rsync_user_name: rsync_user
+              rsync_host_ip: 192.168.1.11
+              rsync_host_port: "22"
+              rsync_user_key: /home/rsync_user/.ssh/id_ed25519
+              destination_dir: /var/www/html
+              delete: "true"
+              delay: 5

@@ -64,24 +64,36 @@ lsyncd_max_processes: 1
 lsyncd_inotify_mode: CloseWrite
 
 # @var lsyncd_config:description: >
-# Sync pairs mapping local source directories to remote rsync targets.
-# Each entry accepts an optional `host_verification` key ("yes" by default),
+# Maps local source directories to a list of remote rsync targets, allowing
+# a single source to be synced to more than one remote host.
+# Each target accepts an optional `host_verification` key ("yes" by default),
 # passed to ssh as StrictHostKeyChecking. Only set it to "no" if you
 # understand this disables verification of the remote host's identity.
 # @var lsyncd_config:required: `true`, only when action is deploy_config
-# @var lsyncd_config:type: Dict
+# @var lsyncd_config:type: Dict of Lists
 # @var lsyncd_config:example: $>
 # {
-#   "/var/www/html": {
-#     "rsync_user_name": "rsync_user",
-#     "rsync_host_ip": "192.168.1.10",
-#     "rsync_host_port": "22",
-#     "rsync_user_key": "/home/rsync_user/.ssh/id_ed25519",
-#     "destination_dir": "/var/www/html",
-#     "delete": "true",
-#     "delay": 5,
-#     "host_verification": "yes"
-#   }
+#   "/var/www/html": [
+#     {
+#       "rsync_user_name": "rsync_user",
+#       "rsync_host_ip": "192.168.1.10",
+#       "rsync_host_port": "22",
+#       "rsync_user_key": "/home/rsync_user/.ssh/id_ed25519",
+#       "destination_dir": "/var/www/html",
+#       "delete": "true",
+#       "delay": 5,
+#       "host_verification": "yes"
+#     },
+#     {
+#       "rsync_user_name": "rsync_user",
+#       "rsync_host_ip": "192.168.1.11",
+#       "rsync_host_port": "22",
+#       "rsync_user_key": "/home/rsync_user/.ssh/id_ed25519",
+#       "destination_dir": "/var/www/html",
+#       "delete": "true",
+#       "delay": 5
+#     }
+#   ]
 # }
 # @end
 

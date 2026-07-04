@@ -49,27 +49,35 @@ Use comma without spaces as a delimiter for multiple actions.
 
 ### lsyncd_config
 
-Sync pairs mapping local source directories to remote rsync targets.
-Each entry accepts an optional `host_verification` key ("yes" by default),
+Maps local source directories to a list of remote rsync targets, allowing
+a single source to be synced to more than one remote host.
+Each target accepts an optional `host_verification` key ("yes" by default),
 passed to ssh as StrictHostKeyChecking. Only set it to "no" if you
 understand this disables verification of the remote host's identity.
 
 **_Required:_** `true`, only when action is deploy_config<br />
-**_Type:_** Dict<br />
+**_Type:_** Dict of Lists<br />
 
 #### Example usage
 
 ```YAML
 lsyncd_config:
   /var/www/html:
-    rsync_user_name: rsync_user
-    rsync_host_ip: 192.168.1.10
-    rsync_host_port: '22'
-    rsync_user_key: /home/rsync_user/.ssh/id_ed25519
-    destination_dir: /var/www/html
-    delete: 'true'
-    delay: 5
-    host_verification: yes
+    - rsync_user_name: rsync_user
+      rsync_host_ip: 192.168.1.10
+      rsync_host_port: '22'
+      rsync_user_key: /home/rsync_user/.ssh/id_ed25519
+      destination_dir: /var/www/html
+      delete: 'true'
+      delay: 5
+      host_verification: yes
+    - rsync_user_name: rsync_user
+      rsync_host_ip: 192.168.1.11
+      rsync_host_port: '22'
+      rsync_user_key: /home/rsync_user/.ssh/id_ed25519
+      destination_dir: /var/www/html
+      delete: 'true'
+      delay: 5
 ```
 
 ### lsyncd_config_base
